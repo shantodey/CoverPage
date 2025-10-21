@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p templates tmp public admin assets/css assets/js)",
+      "Bash(composer install)",
+      "Bash(dir /B /A)",
+      "Read(//c/xampp/apache/logs/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost/CoverPage/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost/CoverPage/public/\")",
+      "Bash(curl -s \"http://localhost/CoverPage/public/\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

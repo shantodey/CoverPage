@@ -1,0 +1,14 @@
+{
+    "name": "coverpage/document-generator",
+    "description": "Cover Page - DOCX/PDF Document Generator with Template Management",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "phpoffice/phpword": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "CoverPage\\": "src/"
+        }
+    }
+}
