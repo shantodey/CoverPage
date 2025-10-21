@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Form Submission</title>
+</head>
+<body>
+    <h2>Test Form Submission</h2>
+
+    <form id="testForm">
+        <label>Template ID: <input type="number" name="template_id" value="1" required></label><br><br>
+        <label>Student Name: <input type="text" name="student_name" value="Test Student" required></label><br><br>
+        <label>Student Index: <input type="text" name="student_index" value="CST-M-1914" required></label><br><br>
+        <label>Board Roll: <input type="text" name="board_roll" value="759291" required></label><br><br>
+        <label>Semester: <input type="text" name="semester" value="6th" required></label><br><br>
+        <label>Batch: <input type="text" name="batch" value="2019" required></label><br><br>
+        <label>Subject Code: <input type="text" name="subject_code" value="CST-301" required></label><br><br>
+        <label>Subject Name: <input type="text" name="subject_name" value="Web Tech" required></label><br><br>
+        <label>Experiment Name: <input type="text" name="experiment_name" value="Test Exp" required></label><br><br>
+        <label>Assignment No: <input type="text" name="assignment_no" value="1" required></label><br><br>
+        <label>Session: <input type="text" name="session" value="2024-25" required></label><br><br>
+        <label>Date of Expt: <input type="date" name="date_of_expt" value="2025-10-15" required></label><br><br>
+        <label>Submission Date: <input type="date" name="submission_date" value="2025-10-21" required></label><br><br>
+        <label>Teacher Name: <input type="text" name="teacher_name" value="Dr. Smith" required></label><br><br>
+        <label>Teacher Designation: <input type="text" name="teacher_designation" value="Professor" required></label><br><br>
+        <label>Download Type:
+            <select name="download_type" required>
+                <option value="pdf">PDF</option>
+                <option value="docx">DOCX</option>
+                <option value="both">Both</option>
+            </select>
+        </label><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="status"></div>
+    <div id="error" style="color: red;"></div>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const status = document.getElementById('status');
+            const error = document.getElementById('error');
+
+            status.textContent = 'Submitting...';
+            error.textContent = '';
+
+            console.log('=== Form Data ===');
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+
+            fetch('public/generate.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                console.log('Content-Type:', response.headers.get('content-type'));
+
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        console.error('Error response:', text);
+                        throw new Error(text || 'Generation failed');
+                    });
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                console.log('Blob received:', blob.size, 'bytes');
+                status.textContent = '✅ Success! Blob size: ' + blob.size + ' bytes';
+
+                // Try to download
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'test_cover.docx';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                status.textContent = '';
+                error.textContent = '❌ Error: ' + err.message;
+            });
+        });
+    </script>
+</body>
+</html>

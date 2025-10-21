@@ -1,15 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir -p templates tmp public admin assets/css assets/js)",
-      "Bash(composer install)",
-      "Bash(dir /B /A)",
-      "Read(//c/xampp/apache/logs/**)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost/CoverPage/\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost/CoverPage/public/\")",
-      "Bash(curl -s \"http://localhost/CoverPage/public/\")",
-      "Bash(cp index.php index.php.backup)",
-      "Bash(curl -s \"http://localhost/CoverPage/public/generate.php\" -X POST)"
+      "Bash(curl -s \"http://localhost/CoverPage/use_sample_template.php\")",
+      "Bash(curl -s \"http://localhost/CoverPage/public/generate.php\" -X POST -F \"template_id=1\" -F \"student_name=Test Student\" -F \"student_index=CST-M-1914\" -F \"board_roll=759291\" -F \"semester=6th\" -F \"batch=2019\" -F \"subject_code=CST-301\" -F \"subject_name=Web Technology\" -F \"experiment_name=Creating a form\" -F \"assignment_no=1\" -F \"session=2024-25\" -F \"date_of_expt=2025-10-15\" -F \"submission_date=2025-10-21\" -F \"teacher_name=Dr. Smith\" -F \"teacher_designation=Professor\" -F \"download_type=docx\" -o \"C:/xampp/htdocs/CoverPage/test_output.docx\")"
     ],
     "deny": [],
     "ask": []

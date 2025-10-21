@@ -17,8 +17,9 @@ $departments = array_unique(array_column($templates, 'department'));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cover Page Generator</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
     <style>
-        * {
+               * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -318,7 +319,7 @@ $departments = array_unique(array_column($templates, 'department'));
             opacity: 0.9;
             font-size: 14px;
         }
-    </style>
+        </style>
 </head>
 <body>
     <div class="container">
@@ -447,29 +448,29 @@ $departments = array_unique(array_column($templates, 'department'));
                     <label>Download Format <span class="required">*</span></label>
                     <div class="download-options">
                         <div class="download-option" onclick="selectDownloadType('pdf', this)">
-                            <input type="radio" name="download_type" value="pdf" id="type_pdf" checked>
+                            <input type="radio" name="download_type" value="pdf" id="type_pdf">
                             <label for="type_pdf">
                                 <div class="icon">📕</div>
                                 <div class="title">PDF Only</div>
-                                <div class="desc">Print-ready</div>
+                                <div class="desc">Requires LibreOffice</div>
                             </label>
                         </div>
 
-                        <div class="download-option" onclick="selectDownloadType('docx', this)">
-                            <input type="radio" name="download_type" value="docx" id="type_docx">
+                        <div class="download-option selected" onclick="selectDownloadType('docx', this)">
+                            <input type="radio" name="download_type" value="docx" id="type_docx" checked>
                             <label for="type_docx">
                                 <div class="icon">📘</div>
                                 <div class="title">DOCX Only</div>
-                                <div class="desc">Editable</div>
+                                <div class="desc">Recommended</div>
                             </label>
                         </div>
 
-                        <div class="download-option selected" onclick="selectDownloadType('both', this)">
+                        <div class="download-option" onclick="selectDownloadType('both', this)">
                             <input type="radio" name="download_type" value="both" id="type_both">
                             <label for="type_both">
                                 <div class="icon">📦</div>
                                 <div class="title">Both (ZIP)</div>
-                                <div class="desc">PDF + DOCX</div>
+                                <div class="desc">Requires LibreOffice</div>
                             </label>
                         </div>
                     </div>
@@ -541,7 +542,9 @@ $departments = array_unique(array_column($templates, 'department'));
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Generation failed');
+                    return response.text().then(text => {
+                        throw new Error(text || 'Generation failed');
+                    });
                 }
                 return response.blob();
             })
@@ -577,7 +580,7 @@ $departments = array_unique(array_column($templates, 'department'));
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('loadingOverlay').classList.remove('active');
-                showError('Failed to generate document. Please try again.');
+                showError(error.message || 'Failed to generate document. Please try again.');
             });
         });
 

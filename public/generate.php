@@ -5,14 +5,18 @@
  * Merges form data into template and generates DOCX/PDF
  */
 
+// Start output buffering to prevent any accidental output
+ob_start();
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/database.php';
 
 use PhpOffice\PhpWord\TemplateProcessor;
 
-// Set error handling
+// Set error handling - DISABLED to prevent output before headers
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
+ini_set('log_errors', 1);
 
 // Set max execution time for PDF conversion
 set_time_limit(120);
