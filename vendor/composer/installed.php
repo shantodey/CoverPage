@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'coverpage/document-generator',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'd6fb5c1557516d92f2b395fd032403722f61f467',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'coverpage/document-generator' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'd6fb5c1557516d92f2b395fd032403722f61f467',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

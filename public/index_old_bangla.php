@@ -1,6 +1,6 @@
 <?php
 /**
- * Public Form - Cover Page Generator (English Only)
+ * Public Form - Cover Page Generator
  */
 
 require_once __DIR__ . '/../config/database.php';
@@ -144,6 +144,28 @@ $departments = array_unique(array_column($templates, 'department'));
             gap: 20px;
         }
 
+            gap: 12px;
+            padding: 4px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+            color: #667eea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         .download-options {
             display: flex;
             gap: 12px;
@@ -167,6 +189,10 @@ $departments = array_unique(array_column($templates, 'department'));
 
         .download-option input[type="radio"] {
             display: none;
+        }
+
+        .download-option input[type="radio"]:checked + label {
+            color: #667eea;
         }
 
         .download-option.selected {
@@ -338,7 +364,7 @@ $departments = array_unique(array_column($templates, 'department'));
             <form id="coverForm" method="POST" action="generate.php">
                 <!-- Template Selection -->
                 <div class="form-group">
-                    <label for="template_id">Select Template <span class="required">*</span></label>
+                    <label for="template_id">Select Template <span class="required">*</label>
                     <select id="template_id" name="template_id" required>
                         <option value="">Choose a template...</option>
                         <?php foreach ($departments as $dept): ?>
@@ -347,6 +373,9 @@ $departments = array_unique(array_column($templates, 'department'));
                                     <?php if ($template['department'] === $dept): ?>
                                         <option value="<?php echo $template['id']; ?>">
                                             <?php echo htmlspecialchars($template['name']); ?>
+                                            <?php if ($template['locale'] !== 'en'): ?>
+                                                (<?php echo strtoupper($template['locale']); ?>)
+                                            <?php endif; ?>
                                         </option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
@@ -355,32 +384,33 @@ $departments = array_unique(array_column($templates, 'department'));
                     </select>
                 </div>
 
+
                 <!-- Student Information -->
                 <div class="form-group">
-                    <label for="student_name">Student Name <span class="required">*</span></label>
+                    <label for="student_name">Student Name <span class="required">*</label>
                     <input type="text" id="student_name" name="student_name" required placeholder="Enter full name">
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="student_index">Index No. <span class="required">*</span></label>
+                        <label for="student_index">Index No. <span class="required">*</label>
                         <input type="text" id="student_index" name="student_index" required placeholder="e.g., CST-M-1914">
                     </div>
 
                     <div class="form-group">
-                        <label for="board_roll">Board Roll <span class="required">*</span></label>
+                        <label for="board_roll">Board Roll <span class="required">*</label>
                         <input type="text" id="board_roll" name="board_roll" required placeholder="e.g., 759291">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="semester">Semester <span class="required">*</span></label>
+                        <label for="semester">Semester <span class="required">*</label>
                         <input type="text" id="semester" name="semester" required placeholder="e.g., 6th">
                     </div>
 
                     <div class="form-group">
-                        <label for="batch">Batch <span class="required">*</span></label>
+                        <label for="batch">Batch <span class="required">*</label>
                         <input type="text" id="batch" name="batch" required placeholder="e.g., 2024-2025">
                     </div>
                 </div>
@@ -388,43 +418,43 @@ $departments = array_unique(array_column($templates, 'department'));
                 <!-- Subject Information -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="subject_code">Subject Code <span class="required">*</span></label>
+                        <label for="subject_code">Subject Code <span class="required">*</label>
                         <input type="text" id="subject_code" name="subject_code" required placeholder="e.g., 67153">
                     </div>
 
                     <div class="form-group">
-                        <label for="subject_name">Subject Name <span class="required">*</span></label>
+                        <label for="subject_name">Subject Name <span class="required">*</label>
                         <input type="text" id="subject_name" name="subject_name" required placeholder="Enter subject name">
                     </div>
                 </div>
 
                 <!-- Experiment Information -->
                 <div class="form-group">
-                    <label for="experiment_name">Name of Experiment <span class="required">*</span></label>
+                    <label for="experiment_name">Name of Experiment <span class="required">*</label>
                     <input type="text" id="experiment_name" name="experiment_name" required placeholder="Enter experiment name">
                 </div>
 
                 <!-- Assignment Details -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="assignment_no">Assignment No. <span class="required">*</span></label>
+                        <label for="assignment_no">Assignment No. <span class="required">*</label>
                         <input type="text" id="assignment_no" name="assignment_no" required placeholder="e.g., 01">
                     </div>
 
                     <div class="form-group">
-                        <label for="session">Session <span class="required">*</span></label>
+                        <label for="session">Session <span class="required">*</label>
                         <input type="text" id="session" name="session" required placeholder="e.g., 2024-2025">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="date_of_expt">Date of Expt. <span class="required">*</span></label>
+                        <label for="date_of_expt">Date of Expt. <span class="required">*</label>
                         <input type="date" id="date_of_expt" name="date_of_expt" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="submission_date">Submission Date <span class="required">*</span></label>
+                        <label for="submission_date">Submission Date <span class="required">*</label>
                         <input type="date" id="submission_date" name="submission_date" required>
                     </div>
                 </div>
@@ -432,19 +462,19 @@ $departments = array_unique(array_column($templates, 'department'));
                 <!-- Teacher Information -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="teacher_name">Teacher Name <span class="required">*</span></label>
+                        <label for="teacher_name">Teacher Name <span class="required">*</label>
                         <input type="text" id="teacher_name" name="teacher_name" required placeholder="Teacher's name">
                     </div>
 
                     <div class="form-group">
-                        <label for="teacher_designation">Teacher Designation <span class="required">*</span></label>
+                        <label for="teacher_designation">Teacher Designation <span class="required">*</label>
                         <input type="text" id="teacher_designation" name="teacher_designation" required placeholder="e.g., Lecturer">
                     </div>
                 </div>
 
                 <!-- Download Options -->
                 <div class="form-group">
-                    <label>Download Format <span class="required">*</span></label>
+                    <label>Download Format <span class="required">*</label>
                     <div class="download-options">
                         <div class="download-option" onclick="selectDownloadType('pdf', this)">
                             <input type="radio" name="download_type" value="pdf" id="type_pdf" checked>
@@ -477,11 +507,14 @@ $departments = array_unique(array_column($templates, 'department'));
 
                 <button type="submit" class="btn-submit">
                     🚀 Generate Cover Page
+                    <span class="bn-label" style="display:none;">🚀 কভার পেজ তৈরি করুন
                 </button>
 
                 <div class="info-box">
-                    <strong>ℹ️ Important Note:</strong>
+                    <strong class="en-label">ℹ️ Important Note:</strong>
+                    <strong class="bn-label" style="display:none;">ℹ️ গুরুত্বপূর্ণ নোট:</strong>
                     Your generated files are temporary and will be automatically deleted after download. No data is stored on our servers.
+                    
                 </div>
             </form>
         </div>
@@ -500,6 +533,22 @@ $departments = array_unique(array_column($templates, 'department'));
     </div>
 
     <script>
+        // Language toggle
+            btn.addEventListener('click', () => {
+                btn.classList.add('active');
+
+                const lang = btn.dataset.lang;
+
+                if (lang === 'bn') {
+                    document.querySelectorAll('.en-label').forEach(el => el.style.display = 'none');
+                    document.querySelectorAll('.bn-label').forEach(el => el.style.display = 'inline');
+                } else {
+                    document.querySelectorAll('.en-label').forEach(el => el.style.display = 'inline');
+                    document.querySelectorAll('.bn-label').forEach(el => el.style.display = 'none');
+                }
+            });
+        });
+
         // Download type selection
         function selectDownloadType(type, element) {
             document.querySelectorAll('.download-option').forEach(opt => opt.classList.remove('selected'));

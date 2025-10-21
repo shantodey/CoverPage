@@ -7,7 +7,9 @@
       "Read(//c/xampp/apache/logs/**)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost/CoverPage/\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost/CoverPage/public/\")",
-      "Bash(curl -s \"http://localhost/CoverPage/public/\")"
+      "Bash(curl -s \"http://localhost/CoverPage/public/\")",
+      "Bash(cp index.php index.php.backup)",
+      "Bash(curl -s \"http://localhost/CoverPage/public/generate.php\" -X POST)"
     ],
     "deny": [],
     "ask": []
